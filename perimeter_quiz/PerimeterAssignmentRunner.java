@@ -22,22 +22,49 @@ public class PerimeterAssignmentRunner {
 
     public int getNumPoints (Shape s) {
         // Put code here
-        return 0;
+        int count = 0;
+        for (Point currPt : s.getPoints()) {
+            count++;
+        }
+        return count;
     }
 
     public double getAverageLength(Shape s) {
         // Put code here
-        return 0.0;
+        int sides = getNumPoints(s);
+        double perim = getPerimeter(s);
+        double average = perim / sides;
+        return average;
     }
 
     public double getLargestSide(Shape s) {
         // Put code here
-        return 0.0;
+        // Start with totalPerim = 0
+        double largeSide = 0.0;
+        // Start wth prevPt = the last point 
+        Point prevPt = s.getLastPoint();
+        // For each point currPt in the shape,
+        for (Point currPt : s.getPoints()) {
+            // Find distance from prevPt point to currPt 
+            double currDist = prevPt.distance(currPt);
+            // Update largeSide by currDist
+            if (currDist > largeSide) largeSide = currDist;
+            // Update prevPt to be currPt
+            prevPt = currPt;
+        }
+        return largeSide;
     }
 
     public double getLargestX(Shape s) {
         // Put code here
-        return 0.0;
+        Point prevPt = s.getLastPoint();        
+        double largeX = prevPt.getX();
+        
+        for (Point currPt : s.getPoints()) {
+            double tempX = currPt.getX();
+            if (tempX > largeX) largeX = tempX;
+        }
+        return largeX;
     }
 
     public double getLargestPerimeterMultipleFiles() {
@@ -55,7 +82,15 @@ public class PerimeterAssignmentRunner {
         FileResource fr = new FileResource();
         Shape s = new Shape(fr);
         double length = getPerimeter(s);
+        int sides = getNumPoints(s);
+        double average = getAverageLength(s);
+        double largeSide = getLargestSide(s);
+        double largeX = getLargestX(s);
         System.out.println("perimeter = " + length);
+        System.out.println("sides = " + sides);
+        System.out.println("average = " + average);
+        System.out.println("large side = " + largeSide);
+        System.out.println("large X = " + largeX);
     }
     
     public void testPerimeterMultipleFiles() {

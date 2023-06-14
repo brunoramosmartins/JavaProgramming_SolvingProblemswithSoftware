@@ -2,7 +2,7 @@
 /**
  * Escreva a descrição da classe Part2 aqui.
  * 
- * @author (seu nome) 
+ * @author Bruno Ramos Martins 
  * @version (número de versão ou data)
  */
 public class Part2 {
@@ -13,7 +13,7 @@ public class Part2 {
         // stop codon is "TAA"
         String result = "";
         int startIndex = dna.toUpperCase().indexOf(startCodon.toUpperCase());
-        int stopIndex = dna.toUpperCase().indexOf(stopCodon.toUpperCase(), startIndex);
+        int stopIndex = dna.toUpperCase().indexOf(stopCodon.toUpperCase(), startIndex + startCodon.length());
         
         if (startIndex == -1 || stopIndex == -1 || (startIndex - stopIndex) % 3 != 0) {
             return "";

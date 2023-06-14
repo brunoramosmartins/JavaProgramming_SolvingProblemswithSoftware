@@ -13,7 +13,7 @@ public class Part1 {
         // stop codon is "TAA"
         String result = "";
         int startIndex = dna.indexOf("ATG");
-        int stopIndex = dna.indexOf("TAA", startIndex);
+        int stopIndex = dna.indexOf("TAA", startIndex + 3);
         
         if (startIndex == -1 || stopIndex == -1 || (startIndex - stopIndex) % 3 != 0) {
             return "";
@@ -53,6 +53,11 @@ public class Part1 {
         System.out.println("Gene is " + gene);
         
         dna = "ATGTAA";
+        System.out.println("DNA strand is " + dna);
+        gene = findSimpleGene(dna);
+        System.out.println("Gene is " + gene);
+        
+        dna = "AAATGCCCTAACTAGATTAAGAAACC";
         System.out.println("DNA strand is " + dna);
         gene = findSimpleGene(dna);
         System.out.println("Gene is " + gene);

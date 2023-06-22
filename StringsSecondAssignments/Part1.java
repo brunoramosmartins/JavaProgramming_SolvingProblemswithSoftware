@@ -18,6 +18,20 @@ public class Part1 {
         }
     }
     
+    public String findGene(String dna) {
+        
+        int startIndex = dna.indexOf("ATG");
+        if (startIndex == -1) return "";
+        
+        int stopIndex = 0;
+        int firstTAA = findStopCodon(dna, startIndex, "TAA");
+        int firstTAG = findStopCodon(dna, startIndex, "TAG");
+        int firstTGA = findStopCodon(dna, startIndex, "TGA");
+        if ((firstTAA != -1) && (firstTAA < firstTAG)) {
+            stopIndex = firstTAA;
+        }
+    }
+    
     public void testFindStopCodon() {
         
         String dna = "AATGATACGTAATAGGGT";

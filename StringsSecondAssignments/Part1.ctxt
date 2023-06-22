@@ -2,7 +2,13 @@
 comment0.target=Part1
 comment0.text=\r\n\ Escreva\ a\ descri\u00E7\u00E3o\ da\ classe\ Part1\ aqui.\r\n\ \r\n\ @author\ Bruno\ Ramos\ Martins\ \r\n\ @version\ (n\u00FAmero\ de\ vers\u00E3o\ ou\ data)\r\n
 comment1.params=dna\ startIndex\ stopCodon
-comment1.target=java.lang.Integer\ findStopCodon(java.lang.String,\ int,\ java.lang.String)
-comment2.params=
-comment2.target=void\ testFindStopCodon()
-numComments=3
+comment1.target=int\ findStopCodon(java.lang.String,\ int,\ java.lang.String)
+comment2.params=dna
+comment2.target=java.lang.String\ findGene(java.lang.String)
+comment3.params=
+comment3.target=void\ testFindStopCodon()
+comment4.params=
+comment4.target=void\ testFindGene()
+comment5.params=
+comment5.target=void\ printAllGenes()
+numComments=6

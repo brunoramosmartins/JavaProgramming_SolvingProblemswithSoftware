@@ -98,7 +98,16 @@ public class Part1 {
         
     }
     
-    public void printAllGenes() {
+    public void printAllGenes(String dna) {
+        int startIndex = 0;
         
+        while ( true ) {
+            String currentGene = findGene(dna.substring(startIndex));
+            if (currentGene.isEmpty()) {
+                break;
+            }
+            System.out.println(currentGene);
+            startIndex = dna.indexOf(currentGene, startIndex) + currentGene.length(); 
+        }
     }
 }

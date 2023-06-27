@@ -11,14 +11,14 @@ import org.apache.commons.csv.*;
 
 public class WhichCountriesExport {
     
-    public void listExporters(CSVParser parser, String exportOfInterest) {
+    public void listExporters(CSVParser parser, String exportOfInterest1, String exportOfInterest2) {
 
         // for each row in the CSV file
         for (CSVRecord record : parser) {
             // Look at the "Exports" column
             String export = record.get("Exports");
             // Check if it contains exportOfInterest
-            if (export.contains(exportOfInterest)) {
+            if (export.contains(exportOfInterest1) && export.contains(exportOfInterest2)) {
                 // If so, write down the "Country" from that row
                 String country = record.get("Country");
                 System.out.println(country);
@@ -26,10 +26,10 @@ public class WhichCountriesExport {
         }
     }
 
-    public void whoExportsCoffee() {
+    public void whoExports() {
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser();
-        listExporters(parser, "fish");
+        listExporters(parser, "fish", "nuts");
     }
     
     public void countryInfo(CSVParser parser, String country){

@@ -29,13 +29,64 @@ public class WhichCountriesExport {
     public void whoExportsCoffee() {
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser();
-        listExporters(parser, "coffee");
+        listExporters(parser, "fish");
     }
     
-    //public String countryInfo(CSVParser parser, String country){
+    public void countryInfo(CSVParser parser, String country){
         
+        // for each row in the CSV file
+        boolean check = false;
+        for (CSVRecord record : parser) {
+            // Look at the "Country" column
+            String infoCountry = record.get("Country");
+            if (infoCountry.contains(country)) {
+                String info = country + ": " + record.get("Exports") + ": " + record.get("Value (dollars)");
+                System.out.println(info);
+                check = true;
+                break;
+            }
+        }
+        if (!check) System.out.println("NOT FOUND!");        
+    }
+    
+    public void whoInfo() {
+        FileResource fr = new FileResource();
+        CSVParser parser = fr.getCSVParser();
+        countryInfo(parser, "Nauru");
+    }
+    
+    public void numberOfExporters(CSVParser parser, String exportItem) {
         
+        // for each row in the CSV file
+        int count = 0;
+        for (CSVRecord record : parser) {
+            String exportItens = record.get("Exports");
+            if (exportItens.contains(exportItem)) count++;
+        }
+        System.out.println("The number os countries that export " + exportItem + " is " + count);
+    }
+    
+    public void testNumberOfExporters() {
         
-    //}
+        FileResource fr = new FileResource();
+        CSVParser parser = fr.getCSVParser();
+        numberOfExporters(parser, "sugar");
+    }
+    
+    public void bigExporters(CSVParser parser, String amount) {
         
+        // for each row in the CSV file
+        for(CSVRecord record : parser) {
+            if (amount.length() < record.get("Value (dollars)").length()) {
+                System.out.println(record.get("Country") + " " + record.get("Value (dollars)"));
+            }
+        }
+    }
+    
+    public void testbigExporters() {
+        
+        FileResource fr = new FileResource();
+        CSVParser parser = fr.getCSVParser();
+        bigExporters(parser, "$999.999.999.999");
+    }
 }

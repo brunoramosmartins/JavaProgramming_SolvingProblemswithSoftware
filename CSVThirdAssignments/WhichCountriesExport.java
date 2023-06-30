@@ -29,7 +29,7 @@ public class WhichCountriesExport {
     public void whoExports() {
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser();
-        listExporters(parser, "fish", "nuts");
+        listExporters(parser, "cotton", "flowers");
     }
     
     public void countryInfo(CSVParser parser, String country){
@@ -70,7 +70,7 @@ public class WhichCountriesExport {
         
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser();
-        numberOfExporters(parser, "sugar");
+        numberOfExporters(parser, "cocoa");
     }
     
     public void bigExporters(CSVParser parser, String amount) {

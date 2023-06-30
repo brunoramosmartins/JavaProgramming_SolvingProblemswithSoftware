@@ -62,43 +62,4 @@ public class CSVMax {
         }
         return largestSoFar;
     }
-    
-    public CSVRecord coldestHourInFile(CSVParser parser) {
-        // start with smallerSoFar as nothing
-        CSVRecord smallerSoFar = null;
-        for (CSVRecord currentRow : parser) {
-            smallerSoFar = getSmallerofTwo(currentRow, smallerSoFar);
-        }
-        return smallerSoFar;
-    }
-    
-    public void testColdestHourInFile(){
-        FileResource fr = new FileResource("data\\2015\\weather-2015-01-02.csv");
-        CSVRecord smaller = coldestHourInFile(fr.getCSVParser());
-        System.out.println("coldest temperature was " + smaller.get("TemperatureF") + 
-                            " at " + smaller.get("TimeEST"));
-    }
-    
-    public CSVRecord getSmallerofTwo(CSVRecord currentRow, CSVRecord smallerSoFar) {
-        
-        // If smallerSoFar is nothing
-        if (smallerSoFar == null) smallerSoFar = currentRow;
-        else {
-            double currentTemp = Double.parseDouble(currentRow.get("TemperatureF"));
-            double smallerTemp = Double.parseDouble(smallerSoFar.get("TemperatureF"));
-            // Check if currentRow's temperature > largestSoFar's temperature
-            if ((currentTemp > smallerTemp) && (currentTemp != -9999.0)) {
-                // If so update smallerSoFar to currentRow
-                smallerSoFar = currentRow;
-            }
-        }
-        return smallerSoFar;
-    }
-    
-    public String fileWithColdestTemperature() {
-        
-    }
-    
-    public void testFileWithColdestTemperature() {
-        
-    }
+}

@@ -1,7 +1,13 @@
 # Java Programming: Solving Problems with Software 
 ## by Universidade Duke
 
-**Sobre este Curso**
+Hello, I started this project with the goal of learning Java. I was able to complete it in two weeks because I was on vacation and I did it in parallel with course [Computer Science: Programming with a Purpose](https://www.coursera.org/learn/cs-programming-java), which has a very different approach from this course. Since I already have a strong foundation in programming logic from studying Python for many years, I had no difficulties in completing the course. However, I found the design of the assessments to be inefficient and impractical. You have to use their software, [BlueJ](https://www.dukelearntoprogram.com//downloads/bluej.php?course=2), and run it multiple times to answer the quizzes, which can be a bit tiresome. Nevertheless, I found the course excellent and felt that I learned a lot more about the Java language. One strong point of the course is that it constantly encourages the good practice of writing tests for all methods as a way to evaluate our code. Here is the link to the course on the Coursera plataform: [Java Programming: Solving Problems with Software](https://www.coursera.org/learn/java-programming). If you embark on this learning journey and need any help, feel free to message me.
+
+Link to my certificate:
+
+Below are more details about the course distribution.
+
+**About this course**
 
 Building upon Duke’s “Programming and the Web for Beginners” course, you will grow in your ability to be a problem-solver and programmer by writing Java programs. We are excited that you've chosen to learn Java with us! You will soon be able to solve problems that you find interesting and useful by practicing a design process you will learn in this course.
 

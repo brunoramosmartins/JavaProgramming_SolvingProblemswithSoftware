@@ -98,39 +98,27 @@ public class BabyBirths {
         String newName = "";
         int popularity = 0;
         
-        int totalBoysOld = 0;
-        int totalGirlsOld = 0;
-        int totalBoysNew = 0;
-        int totalGirlsNew = 0;
-        
-        for (CSVRecord record : parserOld) {
-            String currName = record.get(0);
-            String currGender = record.get(1);
-            if (currGender.equals("M")) totalBoysOld++;
-            else                        totalGirlsOld++;
-            
-            if (currName.equals(name) && currGender.equals(gender)) {
-                if (gender.equals("M")) popularity = totalBoysOld;
-                else                    popularity = totalGirlsOld;
-                break;
-            }
-        }
-        
-        for (CSVRecord record : parserNew) {
-            String currGender = record.get(1);
-            if (currGender.equals("M")) totalBoysNew++;
-            else                        totalGirlsNew++;
-            
-            if (currGender.equals(gender) && currGender.equals(gender)) {
-                if (gender.equals("M")) int currPopularity = totalBoysNew;
-                else                    int currPopularity = totalGirlsNew;
-                break;
-            }
-        }
-        
-        System.out.println(name + " born in " + year + " would be " + newName + " if she was born in " + newYear);
+	for(CSVRecord record : parserOld) {
+	    String currName = record.get(0);
+	    String currGender = record.get(1);
+	    
+	    if(currName.equals(name) && currGender.equals(gender)) {
+	        popularity = record.getRecordNumber();
+	    }
+	}
+
+	for(CSVRecord record : parserNew) {
+	    String currGender = record.get(1);
+	    long currPopularity = record.getRecordNumber();
+	    
+	    if(currGender.equals(gender) && popularity == currPopularity) {
+	        newName = record.get(0);
+	    }
+	}
+
+	System.out.println(name + " born in " + year + " would be " + newName + " if she was born in " + newYear);
     }
-    
+        
     public int yearOfHighestRank(String name, String gender) {
         int highestRank = 0;
         int yearOfHighestRank = -1;

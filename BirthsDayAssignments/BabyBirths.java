@@ -10,6 +10,9 @@
 import edu.duke.*;
 import org.apache.commons.csv.*;
 
+import java.io.*;
+import java.util.*;
+
 public class BabyBirths {
     
     public void printNames() {
@@ -56,10 +59,9 @@ public class BabyBirths {
         for (CSVRecord record : parser) {
             String currName = record.get(0);
             String currGender = record.get(1);
-            count++;
-            if (currGender.equals(gender) && currName.equals(name)){
-                rank = count;
-                break;
+            
+            if(currGender.equals(gender) && currName.equals(name)) {
+                rank = record.getRecordNumber();
             }
         }
         return rank;
@@ -69,22 +71,25 @@ public class BabyBirths {
         String name = "";
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser(false);
-        int currRank = 0;
-        
-        for (CSVRecord record : parser) {
-            if (record.get(1).equals(gender)) currRank++;
+                
+        for(CSVRecord record : parser) {
+            long currRank = record.getRecordNumber();
             String currGender = record.get(1);
-            String currName= record.get(0);
-            
-            if (currRank == rank && currGender.equals(gender)) {
+            String currName = record.get(0);
+
+            if(currRank == rank && currGender.equals(gender)) {
                 name = currName;
-            }
-        }
-        
-        if (name != "") return name;
-        else            return "NO NAME";
+	    }
+	}
+
+	if(name != "") {
+	    return name;
+	} 
+	else {
+	    return "NO NAME";
+	}
     }
-    
+        
     public void whatIsNameInYear(String name, int year, int newYear, String gender) {
         FileResource fr = new FileResource();
         FileResource newFr = new FileResource();

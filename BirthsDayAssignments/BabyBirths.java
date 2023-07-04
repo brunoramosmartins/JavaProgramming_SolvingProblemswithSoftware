@@ -51,8 +51,8 @@ public class BabyBirths {
         totalBirths(fr);
     }
     
-    public int getRank(int year, String name, String gender) {
-        int rank = -1;
+    public long getRank(int year, String name, String gender) {
+        long rank = -1;
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser(false);
         int count = 0;
@@ -79,15 +79,15 @@ public class BabyBirths {
 
             if(currRank == rank && currGender.equals(gender)) {
                 name = currName;
-	    }
-	}
+            }
+        }
 
-	if(name != "") {
-	    return name;
-	} 
-	else {
-	    return "NO NAME";
-	}
+        if(name != "") {
+            return name;
+        } 
+        else {
+            return "NO NAME";
+        }
     }
         
     public void whatIsNameInYear(String name, int year, int newYear, String gender) {
@@ -96,33 +96,156 @@ public class BabyBirths {
         CSVParser parserOld = fr.getCSVParser(false);
         CSVParser parserNew = newFr.getCSVParser(false);
         String newName = "";
-        int popularity = 0;
+        long popularity = 0;
         
-	for(CSVRecord record : parserOld) {
-	    String currName = record.get(0);
-	    String currGender = record.get(1);
-	    
-	    if(currName.equals(name) && currGender.equals(gender)) {
-	        popularity = record.getRecordNumber();
-	    }
-	}
+        for(CSVRecord record : parserOld) {
+            String currName = record.get(0);
+            String currGender = record.get(1);
+        
+            if(currName.equals(name) && currGender.equals(gender)) {
+                popularity = record.getRecordNumber();
+            }
+        }
 
-	for(CSVRecord record : parserNew) {
-	    String currGender = record.get(1);
-	    long currPopularity = record.getRecordNumber();
-	    
-	    if(currGender.equals(gender) && popularity == currPopularity) {
-	        newName = record.get(0);
-	    }
-	}
+        for(CSVRecord record : parserNew) {
+            String currGender = record.get(1);
+            long currPopularity = record.getRecordNumber();
+        
+            if(currGender.equals(gender) && popularity == currPopularity) {
+                newName = record.get(0);
+            }
+        }
 
-	System.out.println(name + " born in " + year + " would be " + newName + " if she was born in " + newYear);
+        System.out.println(name + " born in " + year + " would be " + newName + " if she was born in " + newYear);
     }
         
     public int yearOfHighestRank(String name, String gender) {
-        int highestRank = 0;
+        long highestRank = 0;
         int yearOfHighestRank = -1;
         String fileName = "";
         DirectoryResource dr = new DirectoryResource();
+        
+        // Iterate through all files
+        for(File f : dr.selectedFiles()) {
+            FileResource fr = new FileResource(f);
+            CSVParser parser = fr.getCSVParser(false);
+            
+            // Iterate through all records in file
+            for(CSVRecord record : parser) {
+                String currName = record.get(0);
+                String currGender = record.get(1);
+
+                if(currName.equals(name) && currGender.equals(gender)) {
+                    long currRank = record.getRecordNumber();
+                    
+                    if(highestRank == 0) {
+                        highestRank = currRank;
+                        fileName = f.getName();
+                    } 
+                    else {
+                        if(highestRank > currRank) {
+                            highestRank = currRank;
+                            fileName = f.getName();
+                        }
+                    }
+                }
+            }
+        }
+
+        // Remove all non-numeric characters from the filename
+        fileName = fileName.replaceAll("[^\\d]", "");
+        
+        // Convert String fileName to Integer
+        yearOfHighestRank = Integer.parseInt(fileName);
+
+        return yearOfHighestRank;
+    }
+    
+    public double getAverageRank(String name, String gender) {
+        // Initialize a DirectoryResource
+        DirectoryResource dr = new DirectoryResource();
+        // Define rankTotal, howMany
+        double rankTotal = 0.0;
+        int howMany = 0;
+        // For every file the directory add name rank to agvRank
+        for(File f : dr.selectedFiles()) {
+            FileResource fr = new FileResource(f);
+            CSVParser parser = fr.getCSVParser(false);
+            for(CSVRecord record : parser) {
+                String currName = record.get(0);
+                String currGender = record.get(1);
+                if(currName.equals(name) && currGender.equals(gender)){
+                    long currRank = record.getRecordNumber();
+                    rankTotal += (double)currRank;
+                    howMany += 1;
+                }
+            }
+        }
+        // Define avgRank = rankTotal / howMany
+        double avgRank = rankTotal / (double)howMany;
+        return avgRank;
+    }
+    
+    public int getTotalBirthsRankedHigher(int year, String name, String gender) {
+        int numBorn = 0;
+        long rank = getRank(year, name, gender);
+        FileResource fr = new FileResource();
+        CSVParser parser = fr.getCSVParser(false);
+        for(CSVRecord record : parser) {
+            int currBorn = Integer.parseInt(record.get(2));
+            String currGender = record.get(1);
+            long currRank = record.getRecordNumber();
+            if(gender.equals(currGender) && rank > currRank) {
+                numBorn += currBorn;
+            }
+        }
+        return numBorn;
+    }
+    
+    public void testTotlaBirth() {
+        //FileResource fr = new FileResource();
+        //totalBirths(fr);
+        
+        // Q3
+        // long rank = getRank(1905, "Emily", "F");
+        // System.out.println(rank);
+        
+        // Q4
+        // long rank = getRank(1905, "Frank", "M");
+        // System.out.println(rank);
+        
+        // Q5
+        // String name = getName(1980, 350, "F");
+        // System.out.println(name);
+        
+        // Q6
+        // name = getName(1982, 450, "M");
+        // System.out.println(name);
+        
+        // Q7
+        // whatIsNameInYear("Susan", 1972, 2014, "F");
+        
+        // Q8
+        
+        whatIsNameInYear("Owen", 1974, 2014, "M");
+        
+        // long rank = getRank(2012, "Mason", "M");
+        // System.out.println("Rank is: " + rank);
+
+        // String name = getName(2012, 10, "M");
+        // System.out.println("Name: " + name);
+        
+        // whatIsNameInYear("Isabella", 2012, 2014, "F");
+        
+        // System.out.println(yearOfHighestRank("Mason", "M"));
+        
+        //System.out.println(getAverageRank("Mason", "M"));
+        
+        // System.out.println(getTotalBirthsRankedHigher(2012, "Ethan", "M"));
+    }
+
+    public static void main() {
+        BabyBirths names = new BabyBirths();
+        names.testTotlaBirth();
     }
 }

@@ -226,22 +226,31 @@ public class BabyBirths {
         // whatIsNameInYear("Susan", 1972, 2014, "F");
         
         // Q8
+        // whatIsNameInYear("Owen", 1974, 2014, "M");
         
-        whatIsNameInYear("Owen", 1974, 2014, "M");
+        // Q9
+        // int year = yearOfHighestRank("Genevieve", "F");
+        // System.out.println(year);
         
-        // long rank = getRank(2012, "Mason", "M");
-        // System.out.println("Rank is: " + rank);
-
-        // String name = getName(2012, 10, "M");
-        // System.out.println("Name: " + name);
+        // Q10
+        // year = yearOfHighestRank("Mich", "M");
+        // System.out.println(year);
         
-        // whatIsNameInYear("Isabella", 2012, 2014, "F");
+        // Q11
+        // double media = getAverageRank("Susan", "F");
+        // System.out.println(media);
         
-        // System.out.println(yearOfHighestRank("Mason", "M"));
+        // Q12
+        // media = getAverageRank("Robert", "M");
+        // System.out.println(media);
+                
+        // Q13
+        // int t = getTotalBirthsRankedHigher(1990, "Emily", "F");
+        // System.out.println(t);
         
-        //System.out.println(getAverageRank("Mason", "M"));
-        
-        // System.out.println(getTotalBirthsRankedHigher(2012, "Ethan", "M"));
+        //Q14
+        // t = getTotalBirthsRankedHigher(1990, "Drew", "M");
+        // System.out.println(t);
     }
 
     public static void main() {

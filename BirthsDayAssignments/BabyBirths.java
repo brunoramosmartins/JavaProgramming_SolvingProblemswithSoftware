@@ -32,7 +32,8 @@ public class BabyBirths {
         int totalBoys = 0;
         int totalGirls = 0;
         for (CSVRecord rec : fr.getCSVParser(false)) {
-            int numBorn = Integer.parseInt(rec.get(2));
+            // int numBorn = Integer.parseInt(rec.get(2));
+            int numBorn = 1;
             totalBirths += numBorn;
             if (rec.get(1).equals("M")) {
                 totalBoys += numBorn;
@@ -55,29 +56,56 @@ public class BabyBirths {
         long rank = -1;
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser(false);
-        int count = 0;
+        int totalBirths = 0;
+        int totalBoys = 0;
+        int totalGirls = 0;
         for (CSVRecord record : parser) {
             String currName = record.get(0);
             String currGender = record.get(1);
+            int numBorn = 1;
+            totalBirths += numBorn;
+            if (record.get(1).equals("M")) {
+                totalBoys += numBorn;
+            }
+            else {
+                totalGirls += numBorn;
+            }
             
             if(currGender.equals(gender) && currName.equals(name)) {
                 rank = record.getRecordNumber();
             }
         }
-        return rank;
+        if (gender == "F") return rank;
+        else               return rank - totalGirls;
     }
     
     public String getName(int year, int rank, String gender) {
         String name = "";
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser(false);
-                
+        
+        int totalBirths = 0;
+        int totalBoys = 0;
+        int totalGirls = 0;
         for(CSVRecord record : parser) {
             long currRank = record.getRecordNumber();
             String currGender = record.get(1);
             String currName = record.get(0);
-
-            if(currRank == rank && currGender.equals(gender)) {
+            
+            int numBorn = 1;
+            totalBirths += numBorn;
+            
+            if (record.get(1).equals("M")) {
+                totalBoys += numBorn;
+            }
+            else {
+                totalGirls += numBorn;
+            }
+            
+            if(currRank == rank && currGender.equals("F")) {
+                name = currName;
+            }
+            else if (currRank == rank + totalGirls && currGender.equals("M")) {
                 name = currName;
             }
         }
@@ -97,24 +125,25 @@ public class BabyBirths {
         CSVParser parserNew = newFr.getCSVParser(false);
         String newName = "";
         long popularity = 0;
-        
-        for(CSVRecord record : parserOld) {
-            String currName = record.get(0);
-            String currGender = record.get(1);
-        
-            if(currName.equals(name) && currGender.equals(gender)) {
-                popularity = record.getRecordNumber();
-            }
-        }
+        popularity = getRank(year, name, gender);
+        //for(CSVRecord record : parserOld) {
+        //    String currName = record.get(0);
+        //    String currGender = record.get(1);
+        //
+        //    if(currName.equals(name) && currGender.equals(gender)) {
+        //        popularity = record.getRecordNumber();
+        //    }
+        //}
 
-        for(CSVRecord record : parserNew) {
-            String currGender = record.get(1);
-            long currPopularity = record.getRecordNumber();
-        
-            if(currGender.equals(gender) && popularity == currPopularity) {
-                newName = record.get(0);
-            }
-        }
+        //for(CSVRecord record : parserNew) {
+        //    String currGender = record.get(1);
+        //    long currPopularity = record.getRecordNumber();
+        //
+        //    if(currGender.equals(gender) && popularity == currPopularity) {
+        //        newName = record.get(0);
+        //    }
+        //}
+        newName = getName(newYear,(int) popularity, gender);
 
         System.out.println(name + " born in " + year + " would be " + newName + " if she was born in " + newYear);
     }
@@ -167,15 +196,36 @@ public class BabyBirths {
         // Define rankTotal, howMany
         double rankTotal = 0.0;
         int howMany = 0;
+        
         // For every file the directory add name rank to agvRank
         for(File f : dr.selectedFiles()) {
             FileResource fr = new FileResource(f);
             CSVParser parser = fr.getCSVParser(false);
+            int totalBirths = 0;
+            int totalBoys = 0;
+            int totalGirls = 0;
             for(CSVRecord record : parser) {
                 String currName = record.get(0);
                 String currGender = record.get(1);
-                if(currName.equals(name) && currGender.equals(gender)){
+                
+                int numBorn = 1;
+                totalBirths += numBorn;
+            
+                if (record.get(1).equals("M")) {
+                    totalBoys += numBorn;
+                }
+                else {
+                    totalGirls += numBorn;
+                }
+                
+                if(currName.equals(name) && currGender.equals("F")){
                     long currRank = record.getRecordNumber();
+                    rankTotal += (double)currRank;
+                    howMany += 1;
+                }
+                
+                else if (currName.equals(name) && currGender.equals("M")) {
+                    long currRank = record.getRecordNumber() - totalGirls;
                     rankTotal += (double)currRank;
                     howMany += 1;
                 }
@@ -211,7 +261,7 @@ public class BabyBirths {
         // System.out.println(rank);
         
         // Q4
-        // long rank = getRank(1905, "Frank", "M");
+        // long rank = getRank(1971, "Frank", "M");
         // System.out.println(rank);
         
         // Q5
@@ -219,7 +269,7 @@ public class BabyBirths {
         // System.out.println(name);
         
         // Q6
-        // name = getName(1982, 450, "M");
+        // String name = getName(1982, 450, "M");
         // System.out.println(name);
         
         // Q7
@@ -241,8 +291,8 @@ public class BabyBirths {
         // System.out.println(media);
         
         // Q12
-        // media = getAverageRank("Robert", "M");
-        // System.out.println(media);
+        double media = getAverageRank("Robert", "M");
+        System.out.println(media);
                 
         // Q13
         // int t = getTotalBirthsRankedHigher(1990, "Emily", "F");
